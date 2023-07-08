@@ -1,1 +1,1 @@
-# dynamic_programming
+# Dynamic Programming for Inventory Systems
