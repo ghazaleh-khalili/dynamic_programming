@@ -8,6 +8,7 @@
 - [Action Variable](#action-variable)
 - [Cost Function](#cost-function)
 - [Bellman's Equation](#bellmans-equation)
+- [Transition Probability](#transition-probability)
 - [Transition Function](#transition-function)
 - [Algorithms](#algorithms)
   - [Algorithm 1: Finite-horizon Problems](#algorithm-1-finite-horizon-problems)
@@ -30,21 +31,21 @@ The inventory problem involves the decision maker making inventory decisions at 
 
 ### State Variable
 
-At the beginning of each period, the decision maker observes the inventory level, which is represented as the state variable 'S_t', where 't' is the period index.
+At the beginning of each period, the decision maker observes the inventory level, which is represented as the state variable $S_t$, where $t$ is the period index.
 
 ### Action Variable
 
-The ordering quantity for each period, to be used between periods 't' and 't+1', is represented as the action variable '𝑎_𝑡'.
+The ordering quantity for each period, to be used between periods $t$ and $t+1$, is represented as the action variable $𝑎_𝑡$.
 
 ### Cost Function
 
-In this problem, we deal with a cost function rather than a reward function. The cost associated with each period 't' in the planning horizon can be formulated as follows:
+In this problem, we deal with a cost function rather than a reward function. The cost associated with each period $t$ in the planning horizon can be formulated as follows:
 
 ```math
 C_t\left(S_t,a_t\right)=h\left(S_t+a_t-{\hat{D}}_{t+1}\right)^++p\left({\hat{D}}_{t+1}-S_t-a_t\right)^++ca_t 
 ```
 
-where 'S_t' and 'a_t' are the state and action in period 't', respectively. '{\hat{D}}_{t+1}' is the realized demand of that period. 'h' is the holding cost per unit (for unsold units), 'e' is the unit backlog cost (for unsatisfied demand), and 'c' is the ordering cost per unit. Note that '(𝑥)^+=𝑚𝑎𝑥(0,𝑥)'.
+where $S_t$ and $a_t$ are the state and action in period $t$, respectively. ${\hat{D}}_{t+1}$ is the realized demand of that period. $h$ is the holding cost per unit (for unsold units), $e$ is the unit backlog cost (for unsatisfied demand), and $c$ is the ordering cost per unit. Note that $(𝑥)^+=𝑚𝑎𝑥(0,𝑥)$.
 
 ### Bellman's Equation
 
@@ -54,26 +55,26 @@ Bellman's equation is a fundamental equation in DP. In this inventory problem, w
 V_t\left(S_t\right)={min}_{a_t\in A_t}{C_t\left(S_t,a_t\right)+\gamma\sum_{s^\prime\epsilon S}{P\left(S_{t+1}= s^\prime|S_t=s,a_t=a\right)V_{t+1}\left(s^\prime\right)}}   \quad    \forall\ t=0,\cdots,T 
 ```
 
-where '𝑉_𝑡(S_t)' is the value function for period '𝑡', '𝐴_𝑡' is the set of possible actions in period 𝑡, '\gamma' is the discount factor, and 'P\left(S_{t+1}=\left.\ s^\prime\right|S_t,a_t\right)' is the transition probability from state 'S_t' to 'S_{t+1}' given action 'a_t'.
+where $𝑉_𝑡(S_t)$ is the value function for period $𝑡$, $𝐴_𝑡$ is the set of possible actions in period 𝑡, $\gamma$ is the discount factor, and $P\left(S_{t+1}=\left.\ s^\prime\right|S_t,a_t\right)$ is the transition probability from state $S_t$ to $S_{t+1}$ given action $a_t$.
 
 ### Transition Probability
 
 ```math
 P\left(S_{t+1}= s^\prime|S_t,a_t\right)=
 \begin{cases}
-0  & \text{if } s^\prime>S_t+a_t \\
-P^D\left(S_t+a_t-s^\prime\right) & \text{if } 0<s^\prime<S_t+a_t \\
-\sum_{d=S_t+a_t}^{\infty}{P^D\left(d\right)}  & \text{if } s^\prime=0
+0 & \text{if } s^\prime > S_t+a_t \\
+P^D\left(S_t+a_t-s^\prime\right) & \text{if } 0 < s^\prime < S_t+a_t \\
+\sum_{d = S_t+a_t}{P^D \left( d \right)} & \text{if } s^\prime=0 
 \end{cases}
 ```
 
 ### Transition Function
 
-The transition function describes the change in the inventory level from period '𝑡' to period '𝑡+1'. In this problem, the transition function is as follows:
+The transition function describes the change in the inventory level from period $𝑡$ to period $𝑡+1$. In this problem, the transition function is as follows:
 ```math
 S_{t+1}=\left(S_t+a_t-{\hat{D}}_{t+1}\right)^+  
 ```
-where '(𝑥)^+' represents the positive part of 𝑥, ensuring that the inventory level cannot be negative.
+where $(𝑥)^+$ represents the positive part of 𝑥, ensuring that the inventory level cannot be negative.
 
 
 ## Algorithms
@@ -93,7 +94,7 @@ The algorithms implemented in `function.py` are based on the following reference
 
 This algorithm solves finite-horizon problems by employing backward DP. It starts from the final period and calculates the cost function of DP. Then, it moves backward and computes the cost of the previous period. This procedure continues until the first period.
 
-In other words, when we are at time '𝑡' and state 'S_t', the value of 'V_{t+1}(S_t)' has already been computed. Therefore, by finding the total cost of 'S_t', we can calculate the 'V_t(S_t)'. This algorithm is commonly known as backward DP.
+In other words, when we are at time $𝑡$ and state $S_t$, the value of $V_{t+1}(S_t)$ has already been computed. Therefore, by finding the total cost of $S_t$, we can calculate the $V_t(S_t)$. This algorithm is commonly known as backward DP.
 
 Implementing the backward DP algorithm for finite-horizon problems is straightforward. The steps of the algorithm are as follows:
 
@@ -112,7 +113,7 @@ The pseudocode for Algorithm 1 can be summarized as follows:
 
 The infinite-horizon problem differs slightly from the finite-horizon problem. In this case, since the last period is unknown, we cannot directly apply the algorithms used for finite-horizon problems. Instead, we utilize an iterative algorithm called value iteration to update the cost function of DP until a stopping criterion is met.
 
-Value iteration operates by iteratively updating the cost function until the expected cost function converges within a specified error tolerance. The stopping criterion is typically defined using a gap measure, such as '\frac{\epsilon(1-\gamma)}{2\gamma}', where '\epsilon' represents the desired error tolerance and '\gamma' is the discount factor.
+Value iteration operates by iteratively updating the cost function until the expected cost function converges within a specified error tolerance. The stopping criterion is typically defined using a gap measure, such as $\frac{\epsilon(1-\gamma)}{2\gamma}$, where $\epsilon$ represents the desired error tolerance and $\gamma$ is the discount factor.
 
 The value iteration algorithm for the case of infinite-horizon problems is as follows:
 
@@ -131,7 +132,7 @@ You can find the detailed implementation of these algorithms in the `function.py
 
 Please replace `[Author Name]`, `[Book Title]`, `[Publisher]`, `[Year]`, `[Algorithm Name]`, `[Algorithm X Pseudocode]`, and `path/to/algorithmX.png` with the actual information from your reference book and the respective pseudocode screenshots.
 
-Place this "Algorithms" section in your README file after the "Transition Function" section or any other relevant section in your README file. It's a good practice to include it after providing the necessary background information and explaining the concepts related to the inventory problem. This way, readers will have the context and knowledge required to understand and appreciate the algorithms implemented in your code.
+Place this "Algorithms" section in your README file after the "Transition Function" section or any other relevant section in your README file. It$s a good practice to include it after providing the necessary background information and explaining the concepts related to the inventory problem. This way, readers will have the context and knowledge required to understand and appreciate the algorithms implemented in your code.
 
 
 
