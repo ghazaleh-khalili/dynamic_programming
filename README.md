@@ -19,7 +19,7 @@ This repository contains code that solves the inventory problem using dynamic pr
 
 ## Problem Description
 
-The inventory problem involves the DM making inventory decisions at the beginning of each period. The ordered quantities are assumed to be received instantly (zero lead time), and the demand for that period is realized afterward. The goal is to optimize the inventory decisions to minimize costs.
+The inventory problem involves the DM making inventory decisions at the beginning of each period. The ordered quantities are assumed to be received instantly (zero lead time), and the demand for that period is realized afterward. The goal is to optimize ordering decisions to minimize costs.
 
 ### State Variable
 
@@ -33,7 +33,10 @@ The ordering quantity for each period, to be used between periods 𝑡 and 𝑡+
 
 In this problem, we deal with a cost function rather than a reward function. The cost associated with each period 𝑡 in the planning horizon can be formulated as follows:
 
-𝐶𝑡(𝑆𝑡,𝑎𝑡) = ℎ(𝑆𝑡+𝑎𝑡−𝐷̂𝑡+1)+ + 𝑒(𝐷̂𝑡+1−𝑆𝑡−𝑎𝑡)+ + 𝑐𝑎𝑡   (3)
+$$
+C_t\left(S_t,a_t\right) = c^h\left(S_t+a_t-{\hat{D}}_{t+1}\right)^+ + c^p\left({\hat{D}}_{t+1}-S_t-a_t\right)^+ + c^oa_t   \quad (3)
+$$
+
 
 where 𝑆𝑡 and 𝑎𝑡 are the state and action in period 𝑡, respectively, 𝐷̂𝑡+1 is the realized demand of that period, ℎ is the holding cost per unit (for unsold units), 𝑒 is the unit backlog cost (for unsatisfied demand), and 𝑐 is the ordering cost per unit. Note that (𝑥)+=𝑚𝑎𝑥(0,𝑥).
 
