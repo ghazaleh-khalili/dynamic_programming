@@ -130,11 +130,6 @@ The pseudocode for the value iteration algorithm can be summarized as follows:
 
 You can find the detailed implementation of these algorithms in the `function.py` file.
 
-Please replace `[Author Name]`, `[Book Title]`, `[Publisher]`, `[Year]`, `[Algorithm Name]`, `[Algorithm X Pseudocode]`, and `path/to/algorithmX.png` with the actual information from your reference book and the respective pseudocode screenshots.
-
-Place this "Algorithms" section in your README file after the "Transition Function" section or any other relevant section in your README file. It$s a good practice to include it after providing the necessary background information and explaining the concepts related to the inventory problem. This way, readers will have the context and knowledge required to understand and appreciate the algorithms implemented in your code.
-
-
 
 ## Getting Started (Usage)
 
